@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using Word = Microsoft.Office.Interop.Word;
+using Graph = Microsoft.Office.Interop.Graph;
 
 
 
@@ -89,7 +90,7 @@ namespace Nigeria_Reg.Controllers
                 worddoc.Activate();
 
                 int i = 1;
-                //worddoc.Tables[i].Columns(3).Cells(2).Range.Text = "Site Name: " & rs("SiteName").Value & "  ===  Week: " & rs("WeekNo").Value
+                //worddoc.Tables[i].Columns[3].Cells[2].Range.Text = "Site Name: " & rs("SiteName").Value & "  ===  Week: " & rs("WeekNo").Value
                 worddoc.Tables[i].Columns[3].Cells[2].Range.Text = s.SiteName + "  ===  Week " + s.WeekNo;
                 applicationWord.Visible = true;
 
@@ -113,7 +114,7 @@ namespace Nigeria_Reg.Controllers
                 worddoc.Tables[i].Columns[2].Cells[9].Range.Text = s.LGA;
                 worddoc.Tables[i].Columns[2].Cells[10].Range.Text = s.Ward;
 
-                i=6; string[] WeekDate = new string[6]; string[] N = new string[6];
+                i=6; string[] WeekDate = new string[res.Length]; string[] N = new string[res.Length];
                 
                 for(int j=0; j< res.Length; j++)
                 {
@@ -126,9 +127,71 @@ namespace Nigeria_Reg.Controllers
 
 
                 worddoc.Tables[i].Columns[1].Cells[3].Select();
-                applicationWord.Selection.MoveDown(Unit:5, Count:1);
+                applicationWord.Selection.MoveDown(Unit:Word.WdUnits.wdLine, Count:1);
                 applicationWord.Selection.Font.Size = 8;
 
+                drawGraph(applicationWord, worddoc, WeekDate, N);
+
+                i = 7;
+    worddoc.Tables[i].Columns[2].Cells[2].Range.Text = s.hhs.ToString();
+    worddoc.Tables[i].Columns[2].Cells[3].Range.Text = s.inds.ToString();
+    
+                DateTime dt2 = DateTime.ParseExact(s.SurveyDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+    worddoc.Tables[i].Columns[2].Cells[4].Range.Text = dt2.ToString("dd-MMM-yy");
+    worddoc.Tables[i].Columns[2].Cells[5].Range.Text = "Week no. "+s.WeekNo;
+    worddoc.Tables[i].Columns[2].Cells[6].Range.Text = string.IsNullOrEmpty(s.PopChg)?"":s.PopChg; 
+    worddoc.Tables[i].Columns[2].Cells[7].Range.Text = s.PopChg == "No change"? "": string.IsNullOrEmpty(s.ReasonChg)?"":s.ReasonChg;
+    
+    worddoc.Tables[i].Columns[5].Cells[3].Range.Text = (s.f_lt1??0).ToString();;
+    worddoc.Tables[i].Columns[6].Cells[3].Range.Text = ifnull(s.f_1_5);
+    worddoc.Tables[i].Columns[7].Cells[3].Range.Text = ifnull(s.f_6_12);
+    worddoc.Tables[i].Columns[8].Cells[3].Range.Text = ifnull(s.f_13_17);
+    worddoc.Tables[i].Columns[9].Cells[3].Range.Text = ifnull(s.f_18_59);
+    worddoc.Tables[i].Columns[10].Cells[3].Range.Text = ifnull(s.f_60p);
+    worddoc.Tables[i].Columns[11].Cells[3].Range.Text = totF.ToString();
+    
+    worddoc.Tables[i].Columns[5].Cells[4].Range.Text = ifnull(s.m_lt1);
+    worddoc.Tables[i].Columns[6].Cells[4].Range.Text = ifnull(s.m_1_5);
+    worddoc.Tables[i].Columns[7].Cells[4].Range.Text = ifnull(s.m_6_12);
+    worddoc.Tables[i].Columns[8].Cells[4].Range.Text = ifnull(s.m_13_17);
+    worddoc.Tables[i].Columns[9].Cells[4].Range.Text = ifnull(s.m_18_59);
+    worddoc.Tables[i].Columns[10].Cells[4].Range.Text = ifnull(s.m_60p);
+    worddoc.Tables[i].Columns[11].Cells[4].Range.Text = totM.ToString();
+    
+    worddoc.Tables[i].Columns[5].Cells[5].Range.Text = t1.ToString();
+    worddoc.Tables[i].Columns[6].Cells[5].Range.Text = t1_5.ToString();
+    worddoc.Tables[i].Columns[7].Cells[5].Range.Text = t6_12.ToString();
+    worddoc.Tables[i].Columns[8].Cells[5].Range.Text = t13_17.ToString();
+    worddoc.Tables[i].Columns[9].Cells[5].Range.Text = t18_59.ToString();
+    worddoc.Tables[i].Columns[10].Cells[5].Range.Text = t60p.ToString();
+    worddoc.Tables[i].Columns[11].Cells[5].Range.Text = s.inds.ToString();
+    
+    worddoc.Tables[i].Columns[4].Cells[1].Select();
+    worddoc.Tables[i].Columns[4].Cells[1].Range.Text = "DEMOGRAPHICS (Sex and Age breakdown)";
+    applicationWord.Selection.EndKey(Unit:Word.WdUnits.wdLine, Extend:1);//wdExtend);
+    applicationWord.Selection.MoveRight(Unit:Word.WdUnits.wdCharacter, Count:6, Extend:1);//wdExtend);
+    applicationWord.Selection.Cells.Merge();
+    applicationWord.Selection.Font.Size = 8;
+    applicationWord.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+
+    
+    //i = 8
+    //'bar chart table (vchart)
+    //worddoc.Tables[i].Columns[1].Cells[3].Range.Text = "100%"
+    //worddoc.Tables[i].Columns[2].Cells[3].Range.Text = Round(((t1 / tpct) * 100), 2) & "%"
+    //worddoc.Tables[i].Columns[3].Cells[3].Range.Text = Round(((t1_5 / tpct) * 100), 2) & "%"
+    //worddoc.Tables[i].Columns[4].Cells[3].Range.Text = Round(((t6_12 / tpct) * 100), 2) & "%"
+    //worddoc.Tables[i].Columns[5].Cells[3].Range.Text = Round(((t13_17 / tpct) * 100), 2) & "%"
+    //worddoc.Tables[i].Columns[6].Cells[3].Range.Text = Round(((t18_59 / tpct) * 100), 2) & "%"
+    //worddoc.Tables[i].Columns[7].Cells[3].Range.Text = Round(((t60p / tpct) * 100), 2) & "%"
+    //'Pie chart table (vchart2)
+    //worddoc.Tables[i].Columns[10].Cells[3].Range.Text = "100%"
+    //worddoc.Tables[i].Columns[11].Cells[3].Range.Text = Round(((totM / tpct) * 100), 2) & "%"
+    //worddoc.Tables[i].Columns[12].Cells[3].Range.Text = Round(((totF / tpct) * 100), 2) & "%"
+
+    //worddoc.Tables[i].Columns[1].Cells[3).Select
+    //wordapp.Selection.MoveDown Unit:=wdLine, count:=1
 
             }
             catch (COMException ex){
@@ -146,7 +209,97 @@ namespace Nigeria_Reg.Controllers
             
             return null;
         }
+
+        public string ifnull(int? num)
+        {
+            if(num==null || num==0)return "-";
+
+            else return num.ToString();
+        }
+
+        //https://blogs.msdn.microsoft.com/vsod/2009/06/15/creating-charts-in-word-and-powerpoint-using-newly-introduced-object-model-in-office-2007-service-pack-2/
+
+        public void drawGraph(Word.Application wordapp, Word.Document worddoc, string[] WeekDate, string[] N)
+        { 
+            //Word.Chart wdChart = doc.InlineShapes.AddChart(Microsoft.Office.Cha.XlChartType.xl3DColumn , ref missing).Chart;
+            //Word.Chart vchart0;
             
+            Graph.Chart vchart0 ;
+            Graph.DataSheet vsheet0;
+            Graph.Application vapp0;
+            Word.Range rng0;
+            Word.OLEFormat oleF0;
+
+            rng0 = wordapp.Selection.Range;
+
+            rng0.Collapse(Direction:0);
+
+            rng0.InsertAfter("\r");
+            rng0.Collapse( Direction:0);
+
+            oleF0 = worddoc.InlineShapes.AddOLEObject(ClassType:"MSGraph.Chart.8", Range:rng0).OLEFormat;
+
+            oleF0.DoVerb();
+
+            vchart0 = oleF0.Object;
+            vapp0 = vchart0.Application;
+            vsheet0 = vapp0.DataSheet;
+
+            vsheet0.Cells.Clear();
+        
+        for(int j = 1; j< WeekDate.Length+1; j++)
+        {
+            vsheet0.Cells[1, j + 1].Value = WeekDate[j-1];
+            vsheet0.Cells[2, j + 1].Value = N[j-1];
+        }
+        
+        //Set fill color
+
+        int[] Color = new int[6];
+
+        Color[0] = 12;
+        Color[1] = 3;
+        Color[2] = 33;
+        Color[3] = 10;
+        Color[4] = 48;
+        Color[5] = 37;
+
+        vchart0.Application.PlotBy = Graph.XlRowCol.xlRows;
+        vchart0.ChartType = Graph.XlChartType.xlColumnStacked;//xlColumnStacked; 'xlLine
+        vchart0.Width = 360;
+        vchart0.Height = 140;
+        vchart0.HasLegend = false;
+        vchart0.HasAxis[Graph.XlAxisType.xlCategory, Graph.XlAxisGroup.xlPrimary] = true;
+        vchart0.HasAxis[Graph.XlAxisType.xlValue, Graph.XlAxisGroup.xlPrimary] = false;
+        vchart0.Axes(Graph.XlAxisType.xlCategory).HasMajorGridlines = false;
+        vchart0.Axes(Graph.XlAxisType.xlCategory).HasMinorGridlines = false;
+        vchart0.Axes(Graph.XlAxisType.xlValue).HasMajorGridlines = false;
+        vchart0.Axes(Graph.XlAxisType.xlValue).HasMinorGridlines = false;
+        vchart0.Axes(Graph.XlAxisType.xlCategory, Graph.XlAxisGroup.xlPrimary).CategoryType = Graph.XlCategoryType.xlCategoryScale;//xlCategoryScale;
+        vchart0.PlotArea.ClearFormats();
+        vchart0.SeriesCollection(1).HasDataLabels = true;
+
+        for(int j = 1; j< Color.Length+1; j++)
+        {
+            vchart0.SeriesCollection(1).Points(j).DataLabel.Top = vchart0.SeriesCollection(1).Points(j).DataLabel.Top - 25;
+            vchart0.SeriesCollection(1).Points(j).Fill.OneColorGradient(Style:2, Variant:4, Degree:0.231372549019608);
+            vchart0.SeriesCollection(1).Points(j).Fill.Visible = true;
+            vchart0.SeriesCollection(1).Points(j).Fill.ForeColor.SchemeColor = Color[j-1];
+            vchart0.SeriesCollection(1).Points(j).Border.LineStyle = -4142; //xlNone
+        
+        }
+        
+            vapp0.Quit();
+            GC.SuppressFinalize(vsheet0);
+            GC.SuppressFinalize(vapp0);
+            GC.SuppressFinalize(vchart0);
+   
+               int i=6;
+            worddoc.Tables[i].Columns[1].Cells[3].Select();
+            wordapp.Selection.MoveDown(Unit: Word.WdUnits.wdLine, Count: 1);
+            wordapp.Selection.Delete(Unit: Word.WdUnits.wdCharacter, Count: 1);
+
+        }
         
         [HttpPost]
         [AuthorizeRoles("Admin", "Manager", "Can Run Reports")]
