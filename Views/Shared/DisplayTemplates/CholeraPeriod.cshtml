@@ -1,0 +1,26 @@
+﻿@model System.Nullable <int>
+
+@if (Model==1)
+{
+    <text>Less than 3 months ago</text>
+}
+else if (Model==2)
+{
+    <text>Between 3 to 12 months ago</text>
+}
+else if (Model==3)
+{
+    <text>More than 12 and less than 24 months ago</text>
+}
+else if (Model==4)
+{
+    <text>More than 24 months ago</text>
+}
+else if (Model==5)
+{
+    <text>Never</text>
+}
+else
+{
+    <text>N/A</text>
+}

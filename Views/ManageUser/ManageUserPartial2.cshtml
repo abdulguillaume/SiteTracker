@@ -1,0 +1,31 @@
+﻿@using GridMvc.Html
+@model IEnumerable<Nigeria_Reg.Models.SYSUserProfile>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>*@
+    <title>Dog List</title>
+</head>
+<body>
+    <h1>Dog List</h1>
+    <hr />
+    <div style="width:500px;">
+        @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.LoginName).Titled("User Name");
+                        columns.Add(c => c.FirstName).Titled("First Name");
+                        columns.Add(c => c.LastName).Titled("Last Name").Filterable(true);
+                        columns.Add(c => c.Email).Titled("Email");
+                                                
+                    }).WithPaging(5).Sortable(true)
+    </div>
+</body>
+</html>  

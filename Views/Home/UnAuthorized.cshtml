@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "UnAuthorized";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Unauthorized Access!</h2>
+<p>Oops! You don't have permission to access this section of the website, or you need to LogIn first.</p>
+
+<div>
+    <a href="javascript:history.go(-1)">Previous page</a> |
+    @Html.ActionLink("Back to Main page", "Index", "Home")
+</div> 
+

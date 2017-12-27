@@ -1,0 +1,165 @@
+﻿@model Nigeria_Reg.Models.SYSUserProfile
+
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(function () {
+
+    $('#cb').click(function (e) {
+        if (!$(this).is(':checked')) {
+            $('#pwd').val('');
+            $('#cb').prop('checked', false);
+        }
+    });
+    });
+</script>
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("EditUser", "ManageUser", FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
+{
+    //@Html.AntiForgeryToken()
+
+    List<SelectListItem> Sex = new List<SelectListItem>();
+    Sex.Add(new SelectListItem { Text = "Female", Value = "F" });
+    Sex.Add(new SelectListItem { Text = "Male", Value = "M" });
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(m => m.SYSUserID)
+        @Html.HiddenFor(m => m.SYSUserProfileID)
+        @Html.HiddenFor(m => m.created_by)
+        @Html.HiddenFor(m => m.create_time)
+        @Html.HiddenFor(m => m.updated_by)
+        @Html.HiddenFor(m => m.update_time)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SYSUser.LoginName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(m => m.SYSUser.SYSUserID)
+                @Html.HiddenFor(m => m.SYSUser.LoginName)
+
+                @Html.TextBoxFor(model => model.SYSUser.LoginName, new { disabled = "disabled" })
+                @*@Html.ValidationMessageFor(model => model.SYSUser.LoginName, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SYSUser.HashedPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">@Html.HiddenFor(m => m.SYSUser.PasswordSalt)
+                @Html.EditorFor(model => model.SYSUser.HashedPassword, new { @id = "pwd" }) 
+                @Html.CheckBoxFor(m => m.ChangePassword, new { @id = "cb" })
+                @Html.LabelFor(m => m.ChangePassword, new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.SYSUser.HashedPassword, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Gender, Sex, "[Select]", new { id = "ddlSex", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Organization, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Organization, (SelectList)ViewBag.Org, "[Select]", new { id = "ddlOrg", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Organization, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="editor-field">
+            <hr />
+
+            <table>
+                <tr>
+                    <th colspan="8">
+                        <div class="text-danger">
+                            Active roles for User
+                        </div>
+                    </th>
+                </tr>
+                <tr></tr>
+                <tr>
+                    @{
+                                int cnt = 0;
+                                List<Nigeria_Reg.Models.ViewModel.UserRolesViewModel> roles = ViewBag.Roles;
+                                
+                                if (roles != null)
+                                {
+                                    roles.OrderBy(x => x.SortOrder);
+                                    foreach(var role in roles)
+                                    {
+                                        if (cnt++ % 4 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+
+                                        @:<td>
+                                            <input type="checkbox" name="SelectedRoles" value="@role.RoleID"
+                                                   @(Html.Raw(role.isActive ? "checked=\"checked\"" : "")) />
+
+                                            @: @role.RoleName
+                                            @: </td>
+
+                                    }
+                                }
+                                
+                                @: </tr>
+                    }
+
+
+                </table>
+
+            <br />
+            </div>
+                    @*<div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">*@
+                <div>
+                    <input type="submit" value="Save" class="btn btn-default" /> |
+                    @Html.ActionLink("Cancel", "AdminOnly", "ManageUser")
+                </div>
+                        @*</div>
+                    </div>*@
+            </div>
+            }
+
+            <br />
+            <div>
+                @Html.ActionLink("Back to Users", "AdminOnly", "ManageUser")
+            </div>

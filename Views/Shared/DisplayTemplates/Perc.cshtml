@@ -1,0 +1,26 @@
+﻿@model System.Nullable <int>
+
+@if (Model==1)
+{
+    <text>None</text>
+}
+else if (Model==2)
+{
+    <text>< 25%</text>
+}
+else if (Model==3)
+{
+    <text>< 50%</text>
+}
+else if (Model==4)
+{
+    <text>< 75%</text>
+}
+else if (Model==5)
+{
+    <text>> 75%</text>
+}
+else
+{
+    <text>N/A</text>
+}

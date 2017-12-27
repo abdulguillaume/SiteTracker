@@ -1,0 +1,331 @@
+﻿@model Nigeria_Reg.Models.tblSectionB
+
+@{
+    ViewBag.Title = "Edit SectionB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Survey/Section B</h2>
+
+@if (ViewBag.Exception != null)
+{
+    <p style="color: Red">@ViewBag.Exception</p>
+}
+@if (ViewBag.error != null)
+{
+    <p style="color: Red">@ViewBag.error</p>
+}
+
+    @*<h4>tblSurvey</h4>*@
+    <hr />
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.SSID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.SiteName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.SurveyDate)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    @ViewBag.SSID
+                    @*@Html.DisplayFor(m => m.tblSurvey.tblSite.SSID)*@
+                </td>
+                <td>
+                    @ViewBag.SiteName
+                </td>
+                <td>
+                    @ViewBag.SiteType
+                </td>
+                <td>
+                    @ViewBag.s_date
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+@using (Html.BeginForm()) {
+        
+    //@Html.AntiForgeryToken()
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <fieldset>
+
+    <br />
+            @*<table width=100%>*@
+            <table class="table">
+                <tr><th colspan=4><div class="text-danger">B. Population demographic (Best estimate number of)</div></th></tr>
+                <tr>@Html.HiddenFor(m => m.SurveyID)
+                    @Html.HiddenFor(m => m.created_by)
+                    @Html.HiddenFor(m => m.create_time)
+                    @Html.ValidationMessageFor(m => m.SurveyID)
+                    <th>No. of households</th>
+                    <th>Age/Sex</th>
+                    <th>Infants (< 1)</th>
+                    <th>Children (1-5)</th>
+                    <th>Pre-teens (6-12)</th>
+                    <th>Teens (13-17)</th>
+                    <th>Adults (18-59)</th>
+                    <th>Elderly (60+)</th>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.hhs)
+                            @Html.ValidationMessageFor(m => m.hhs)
+                        </div>
+                    </th>
+                    <th>Males</th>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.m_lt1)
+                            @Html.ValidationMessageFor(m => m.m_lt1)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.m_1_5)
+                            @Html.ValidationMessageFor(m => m.m_lt1)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.m_6_12)
+                            @Html.ValidationMessageFor(m => m.m_6_12)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.m_13_17)
+                            @Html.ValidationMessageFor(m => m.m_13_17)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.m_18_59)
+                            @Html.ValidationMessageFor(m => m.m_18_59)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.m_60p)
+                            @Html.ValidationMessageFor(m => m.m_60p)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Females</th>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.f_lt1)
+                            @Html.ValidationMessageFor(m => m.f_lt1)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.f_1_5)
+                            @Html.ValidationMessageFor(m => m.f_1_5)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.f_6_12)
+                            @Html.ValidationMessageFor(m => m.f_6_12)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.f_13_17)
+                            @Html.ValidationMessageFor(m => m.f_13_17)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.f_18_59)
+                            @Html.ValidationMessageFor(m => m.f_18_59)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10 txtresize">
+                            @Html.TextBoxFor(m => m.f_60p)
+                            @Html.ValidationMessageFor(m => m.f_60p)
+                        </div>
+                    </td>
+                </tr>
+ 
+
+            </table>
+
+            <br />
+            <table class="table">
+                <tr><th colspan="2"><div class="text-danger">Population movement</div></th></tr>
+
+                <tr>
+                    <td>Population change overall</td>
+                    <td>
+                        <div class="display-radio">
+                            @Html.RadioButtonFor(m => m.pop_chg, 1, false) Increase
+                            @Html.RadioButtonFor(m => m.pop_chg, 2, false) Decrease
+                            @Html.RadioButtonFor(m => m.pop_chg, 3, false) No change
+                            @Html.ValidationMessageFor(m => m.pop_chg)
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Main reason for increase/decrease</td>
+                    <td>
+                        <div class="display-radio">
+                            @Html.RadioButtonFor(m => m.inc_dec_reason, 1, false) Arrivals
+                            @Html.RadioButtonFor(m => m.inc_dec_reason, 2, false) Departures
+                            @Html.RadioButtonFor(m => m.inc_dec_reason, 3, false) Birth
+                            @Html.RadioButtonFor(m => m.inc_dec_reason, 4, false) Death
+                            @Html.ValidationMessageFor(m => m.inc_dec_reason)
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th colspan="3">
+                        <div class="text-danger">
+                            if ARRIVALS:
+                        </div>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        Government  transport<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Arr_Gvt_trans, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Arr_Gvt_trans)
+                        </div>
+                    </td>
+                    <td>
+                        Military transport<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Arr_Mil_trans, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Arr_Mil_trans)
+                        </div>
+                    </td>
+                    <td>
+                        Independent arrival from another camp<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Arr_Ind_arr_camp, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Arr_Ind_arr_camp)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Independent arrival from host community<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Arr_Ind_arr_HC, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Arr_Ind_arr_HC)
+                        </div>
+                    </td>
+                    <td>
+                        Independent arrival from place of origin<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Arr_Ind_arr_origin, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Arr_Ind_arr_origin)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10">
+                            Other @Html.CheckBoxFor(m => m.ck_Arr_oth, new { @class = "cb_" })
+                                  @Html.ValidationMessageFor(m => m.ck_Arr_oth)
+                            @*</div>
+
+
+                                <div class="editor-field">*@
+                            / specify
+                            @Html.EditorFor(m => m.Arr_oth_spec)
+                            @Html.ValidationMessageFor(m => m.Arr_oth_spec)
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <th colspan="3">
+                        <div class="text-danger">
+                            if DEPARTURES:
+                        </div>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        Government  transport<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Dep_Gvt_trans, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Dep_Gvt_trans)
+                        </div>
+                    </td>
+                    <td>
+                        Military transport<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Dep_Mil_trans, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Dep_Mil_trans)
+                        </div>
+                    </td>
+                    <td>
+                        Independent return to place of origin<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Dep_Ind_ret_origin, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Dep_Ind_ret_origin)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Independent move to another camp<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Dep_Ind_move_oth_camp, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Dep_Ind_move_oth_camp)
+                        </div>
+                    </td>
+                    <td>
+                        Independent move to host community<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.ck_Dep_Ind_move_HC, new { @class = "cb_" })
+                            @Html.ValidationMessageFor(m => m.ck_Dep_Ind_move_HC)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-10">
+                            Other @Html.CheckBoxFor(m => m.ck_Dep_oth, new { @class = "cb_" })
+                                  @Html.ValidationMessageFor(m => m.ck_Dep_oth)
+                            @*</div>
+
+
+                                <div class="editor-field">*@
+                            / specify @Html.EditorFor(m => m.Dep_oth_spec)
+                            @Html.ValidationMessageFor(m => m.Dep_oth_spec)
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        <br />
+        <p>
+            <input type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Details", new { id = Model.SurveyID })
+        </p>
+    </fieldset>
+}
+
+<br />
+<div>
+  @Html.ActionLink("Back to Surveys", "Index")
+</div>
+
+
+

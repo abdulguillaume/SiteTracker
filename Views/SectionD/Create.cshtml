@@ -1,0 +1,698 @@
+﻿@model Nigeria_Reg.Models.SurveyViewD
+
+@{
+    ViewBag.Title = "Create SectionD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Survey/Section D</h2>
+
+@if (ViewBag.Exception != null)
+{
+    <p style="color: Red">@ViewBag.Exception</p>
+}
+
+<script>
+    $(function () {
+
+        $('#date').datepicker({
+            constrainInput: true,   // prevent letters in the input field
+            //minDate: new Date(),    // prevent selection of date older than today
+            maxDate: new Date(),    // prevent selection of date older than today
+            //showOn: 'button',       // Show a button next to the text-field
+            autoSize: true,         // automatically resize the input field
+            dateFormat: 'dd/mm/yy',  // Date Format used
+            //beforeShowDay: $.datepicker.noWeekends,     // Disable selection of weekends
+            firstDay: 1 // Start with Monday
+        })
+
+        //for the gaps
+        $("#forma").on("keyup change", "[class^=g_pline-]", function (e) {
+            var trid_g = $(this).closest('tr').attr('id');
+            if ($(this).val() != '') {
+                $('.g_cb_' + trid_g).prop('checked', true);
+            }
+        });
+
+        $('[class^=g_cb_]').click(function (e) {
+            if (!$(this).is(':checked')) {
+                var trid_g = $(this).closest('tr').attr('id');
+
+                $('#' + trid_g).find('input[type=text], select').each(function () {
+                    $(this).val('');
+                });
+                $('.g_cb_' + trid_g).prop('checked', false);
+
+            }
+        });
+
+        //for services
+        $("#forma").on("keyup change", "[class^=s_pline-]", function (e) {
+            var trid_s = $(this).closest('tr').attr('id');
+            if ($(this).val() != '') {
+                $('.s_cb_' + trid_s).prop('checked', true);
+            }
+        });
+
+        $('[class^=s_cb_]').click(function (e) {
+            if (!$(this).is(':checked')) {
+                var trid_s = $(this).closest('tr').attr('id');
+
+                $('#' + trid_s).find('input[type=text], select').each(function () {
+                    $(this).val('');
+                });
+                $('.s_cb_' + trid_g).prop('checked', false);
+
+            }
+        });
+
+    });
+</script>
+
+<hr />
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.site.SSID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.site.SiteName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.site.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.survey.SurveyDate)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    @ViewBag.SSID
+                    @*@Html.DisplayFor(m => m.tblSurvey.tblSite.SSID)*@
+                </td>
+                <td>
+                    @ViewBag.SiteName
+                </td>
+                <td>
+                    @ViewBag.SiteType
+                </td>
+                <td>
+                    @ViewBag.s_date
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+@using (Html.BeginForm("Create", "SectionD", FormMethod.Post, new { id = "forma" }))
+
+{
+        
+    //@Html.AntiForgeryToken()
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <fieldset>
+
+    <br />
+        <table class="table">
+            <tr><th colspan=4><div class="text-danger">D. WASH</div></th></tr>
+            <tr>
+                <th colspan="3">
+                    <div class="text-danger">
+                        D.1. Activities carried out during the week
+                    </div>
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    Distribution of water<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_Water_dist)
+                        @Html.ValidationMessageFor(m => m.d.b_Water_dist)
+                    </div>
+                </td>
+                <td>
+                    Distribution of water storage facilities<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_WaterStorage_fac_dist)
+                        @Html.ValidationMessageFor(m => m.d.b_WaterStorage_fac_dist)
+                    </div>
+                </td>
+                <td>
+                    Installation/repair of latrines<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_Install_repair_lat)
+                        @Html.ValidationMessageFor(m => m.d.b_Install_repair_lat)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Installation-repair of washing facilities<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_Install_repair_washing_fac)
+                        @Html.ValidationMessageFor(m => m.d.b_Install_repair_washing_fac)
+                    </div>
+                </td>
+                <td>
+                    Installation/repair of garbage disposal<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_Install_repair_garbage_disp)
+                        @Html.ValidationMessageFor(m => m.d.b_Install_repair_garbage_disp)
+                    </div>
+                </td>
+                <td>
+                    Installation/repair of drainage system<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_Install_repair_drainage_syst)
+                        @Html.ValidationMessageFor(m => m.d.b_Install_repair_drainage_syst)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Hygiene promotion campaign<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_Hygiene_promo_campaign)
+                        @Html.ValidationMessageFor(m => m.d.b_Hygiene_promo_campaign)
+                    </div>
+                </td>
+                <td>
+                    Other activity carried<div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.d.b_other_activity)
+                        @Html.ValidationMessageFor(m => m.d.b_other_activity)
+                    </div>
+                </td>
+                <td>
+                    If other specify:<div class="display-field">
+                        @Html.TextBoxFor(m => m.d.other_activity_spec)
+                        @Html.ValidationMessageFor(m => m.d.other_activity_spec)
+                    </div>
+
+                </td>
+            </tr>
+</table>
+
+        <table>
+            <tr>
+                <th colspan="6">
+                    <div class="text-danger">
+                        D.1.a. Sanitation infrastructures
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <td>
+
+                    <table width="100%" class="table">
+                        <tr>
+
+                            <th colspan="2">***Total number of Latrines***</th>
+
+                            <th colspan="2">***Total number of Showers***</th>
+
+                            <th colspan="2">***Total number of Hand-washing points***</th>
+                        </tr>
+
+                        <tr>
+
+                            <td colspan="2">
+                                <table ="100%" class="table">
+                                    <tr>
+                                        <td>Functional</td>
+                                        <td>Non-functional</td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td colspan="2">
+                                <table ="100%" class="table">
+                                    <tr>
+                                        <td>Functional</td>
+                                        <td>Non-functional</td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td colspan="2">
+                                <table ="100%" class="table">
+                                    <tr>
+                                        <td>Functional</td>
+                                        <td>Non-functional</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table ="100%" class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="col-md-10 txtresize">
+                                                @Html.TextBoxFor(m => m.d.nb_func_latrines)
+                                                @Html.ValidationMessageFor(m => m.d.nb_func_latrines)
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="col-md-10 txtresize">
+                                                @Html.TextBoxFor(m => m.d.nb_non_func_latrines)
+                                                @Html.ValidationMessageFor(m => m.d.nb_non_func_latrines)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td colspan="2">
+                                <table ="100%" class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="col-md-10 txtresize">
+                                                @Html.TextBoxFor(m => m.d.nb_func_bathrooms)
+                                                @Html.ValidationMessageFor(m => m.d.nb_func_bathrooms)
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="col-md-10 txtresize">
+                                                @Html.TextBoxFor(m => m.d.nb_non_func_bathrooms)
+                                                @Html.ValidationMessageFor(m => m.d.nb_non_func_bathrooms)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td colspan="2">
+                                <table ="100%" class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="col-md-10 txtresize">
+                                                @Html.TextBoxFor(m => m.d.nb_func_WP)
+                                                @Html.ValidationMessageFor(m => m.d.nb_func_WP)
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="col-md-10 txtresize">
+                                                @Html.TextBoxFor(m => m.d.nb_non_func_WP)
+                                                @Html.ValidationMessageFor(m => m.d.nb_non_func_WP)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <table width="100%" class="table">
+
+            <tr><th colspan="6"><div class="text-danger">D.1b. Cholera</div></th></tr>
+            <tr>
+                <td colspan="2">When was the last confirmed case of cholera in the camp?</td>
+                <td colspan="4">
+                    <div class="display-radio">
+                        @Html.RadioButtonFor(m => m.d.LastCholera_case, 1, false) Less than 3 mo ago
+                        @Html.RadioButtonFor(m => m.d.LastCholera_case, 2, false) Between 3 to 12 mo
+                        @Html.RadioButtonFor(m => m.d.LastCholera_case, 3, false) Between >12 and 24 mo
+                        @Html.RadioButtonFor(m => m.d.LastCholera_case, 4, false) More than 24 mo
+                        @Html.RadioButtonFor(m => m.d.LastCholera_case, 5) Never
+                        @Html.ValidationMessageFor(m => m.d.LastCholera_case)
+                    </div>
+                    <div class="col-md-10 txtresize">
+                        Precise how many months ago if you can: @Html.TextBoxFor(m => m.d.NbMonths)
+                        @Html.ValidationMessageFor(m => m.d.NbMonths)
+                    </div>
+                </td>
+            </tr>
+
+            <tr><th colspan="6"><div class="text-danger">D.1c. Waste Disposal (observation)</div></th></tr>
+            <tr>
+                <td colspan="2">On a scale from 1 (very clean) to 5 (v. dirty) how clean regarding solid waste do you think the camp is?</td>
+                <td colspan="4">
+                    <div class="display-radio">
+                        @Html.RadioButtonFor(m => m.d.SolidWaste_st, 1, false) 1-very clean
+                        @Html.RadioButtonFor(m => m.d.SolidWaste_st, 2, false) 2-clean
+                        @Html.RadioButtonFor(m => m.d.SolidWaste_st, 3, false) 3-not so clean
+                        @Html.RadioButtonFor(m => m.d.SolidWaste_st, 4, false) 4-dirty
+                        @Html.RadioButtonFor(m => m.d.SolidWaste_st, 5, false) 5-very dirty
+                        @Html.ValidationMessageFor(m => m.d.SolidWaste_st)
+                    </div>
+                </td>
+            </tr>
+
+            <tr><th colspan="6"><div class="text-danger">D.1d. Drainage (observation)</div></th></tr>
+            <tr>
+                <td colspan="2">On a scale from 1 (very good) to 5 (v. poor) how would you rate the drainage of the camp?</td>
+                <td colspan="4">
+                    <div class="display-radio">
+                        @Html.RadioButtonFor(m => m.d.Drainage_st, 1, false) 1-very good
+                        @Html.RadioButtonFor(m => m.d.Drainage_st, 2, false) 2-good
+                        @Html.RadioButtonFor(m => m.d.Drainage_st, 3, false) 3-average
+                        @Html.RadioButtonFor(m => m.d.Drainage_st, 4, false) 4-poor
+                        @Html.RadioButtonFor(m => m.d.Drainage_st, 5, false) 5-very poor
+                        @Html.ValidationMessageFor(m => m.d.Drainage_st)
+                    </div>
+                </td>
+            </tr>
+
+            <tr><th colspan="6"><div class="text-danger">D.1e. Water</div></th></tr>
+            <tr>
+                <td colspan="2">What is the average waiting time at the water points?</td>
+                <td colspan="4">
+                    <div class="display-radio">
+                        @Html.RadioButtonFor(m => m.d.AvgWaitingTimeWP, 1, false) less than 15min
+                        @Html.RadioButtonFor(m => m.d.AvgWaitingTimeWP, 2, false) 16 to 30min
+                        @Html.RadioButtonFor(m => m.d.AvgWaitingTimeWP, 3, false) 30 to 60min
+                        @Html.RadioButtonFor(m => m.d.AvgWaitingTimeWP, 4, false) >60min and less than 120min
+                        @Html.RadioButtonFor(m => m.d.AvgWaitingTimeWP, 5, false) >120min (or 2h)
+                        @Html.ValidationMessageFor(m => m.d.AvgWaitingTimeWP)
+                    </div>
+                    <div class="col-md-10 txtresize">
+                        Precise how many minutes if you can: @Html.TextBoxFor(m => m.d.NbMinutes)
+                        @Html.ValidationMessageFor(m => m.d.NbMinutes)
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr><th><div class="text-danger">Volume of water produced per day (liters)</div></th></tr>
+
+            <tr>
+                <td></td>
+                <td>Nb. unit</td>
+                <td>Volume (liter) or flow (liter/h)</td>
+                <td>Number of time the tank is filled up per day (or nb of working hours)</td>
+            </tr>
+
+            <tr>
+                <th style="color: green">Water from hand-pump (wells or boreholes)
+                <th />
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.HandPump_NbUnit)
+                        @Html.ValidationMessageFor(m => m.d.HandPump_NbUnit)
+                    </div>
+                </td>
+                <td>700 l/h</td>
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.HandPump_NbWorkingHrs)
+                        @Html.ValidationMessageFor(m => m.d.HandPump_NbWorkingHrs)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th style="color: orange">Water from truck tanks of 2.000 liters
+                <th />
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank2KL_NbUnit)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank2KL_NbUnit)
+                    </div>
+                </td>
+                <td>2.000 l</td>
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank2KL_NbTimesFilled)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank2KL_NbTimesFilled)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th style="color: blueviolet">Water from truck tanks of 3.000 liters
+                <th />
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank3KL_NbUnit)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank3KL_NbUnit)
+                    </div>
+                </td>
+                <td>3.000 l</td>
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank3KL_NbTimesFilled)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank3KL_NbTimesFilled)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th style="color: darkblue">Water from truck tanks of 5.000 liters
+                <th />
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank5KL_NbUnit)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank5KL_NbUnit)
+                    </div>
+                </td>
+                <td>5.000 l</td>
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank5KL_NbTimesFilled)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank5KL_NbTimesFilled)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th style="color: purple">Water from truck tanks/bladder of 10.000 liters
+                <th />
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank10KL_NbUnit)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank10KL_NbUnit)
+                    </div>
+                </td>
+                <td>10.000 l</td>
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.WaterTank10KL_NbTimesFilled)
+                        @Html.ValidationMessageFor(m => m.d.WaterTank10KL_NbTimesFilled)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th style="color: darkgoldenrod">
+                    Number of taps from a Water Piped System from the city /
+                    town (only if the camps is connected to water network from outside the camp)
+                <th />
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.Tap_NbUnit)
+                        @Html.ValidationMessageFor(m => m.d.Tap_NbUnit)
+                    </div>
+                </td>
+                <td>400 l/h</td>
+                <td>
+                    <div class="col-md-10 txtresize">
+                        @Html.TextBoxFor(m => m.d.Tap_NbWorkingHrs)
+                        @Html.ValidationMessageFor(m => m.d.Tap_NbWorkingHrs)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th colspan="3">
+                    <div class="text-danger">
+                        D.2. Comments
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="editor-field">
+                        @*@Html.EditorFor(m => m.d.Comments)*@
+                        @Html.TextAreaFor(m => m.d.Comments, new { cols = 200, @rows = 6 })
+                        @Html.ValidationMessageFor(m => m.d.Comments)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th colspan="3">
+                    <div class="text-danger">
+                        D.3. Services and Facilities donated with status (weekly basis)
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="8">
+
+                    <table width="100%" class="table">
+                        <tr>
+                            <th></th>
+                            <th>S/N</th>
+                            <th>Sub-Category</th>
+                            <th>Description</th>
+                            <th>QTTY</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Provided by?</th>
+                            <th>Remark</th>
+                        </tr>
+
+                        @for (int i = 0; i < Model.srv.Count(); i++)
+                        {
+                            int j = i + 1;
+                            //string str = "_s";
+                            //k = k + 1;
+                            <tr id='@i'>
+
+                                <td>
+                                    @Html.HiddenFor(model => model.srv[i].SurveyID)
+                                    <div class="col-md-10">
+                                        @Html.CheckBoxFor(model => model.srv[i].notEmpty, new { @class = "s_cb_" + @i })
+                                    </div>
+                                </td>
+                                <td>
+                                    @Html.HiddenFor(model => model.srv[i].SN)
+                                    @j
+                                </td>
+                                <td>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.srv[i].SubCat, new SelectList((SelectList)ViewBag.Wash_SubCat, "Value", "Text", Model.srv[i].SubCat), "[Select]", new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].SubCat)
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.srv[i].Description, new SelectList((SelectList)ViewBag.Wash_Desc, "Value", "Text", Model.srv[i].Description), "[Select]", new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].Description)
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.TextBoxFor(model => model.srv[i].QTTY, new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].QTTY)
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.srv[i].Lat, new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].Lat)
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.srv[i].Lon, new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].Lon)
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.srv[i].Provider, new SelectList((SelectList)ViewBag.Prov, "Value", "Text", Model.srv[i].Provider), "[Select]", new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].Provider)
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.srv[i].Remark, new { @class = "s_pline-" + @i })
+                                        @Html.ValidationMessageFor(model => model.srv[i].Remark)
+                                    </div>
+                                </td>
+
+
+                            </tr>
+                        }
+
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+
+                                    <br />
+                                    <p>
+                                        <input type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id = (int)ViewBag.s_id })
+                                    </p>
+</fieldset>
+}
+
+<br />
+<div>
+    @*@Html.ActionLink("Back to Surveys", "Index")*@
+    @Html.ActionLink("Back to SectionC", "Index", "SectionC", new RouteValueDictionary(new { id = (int)ViewBag.s_id }), null)
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        //$('#ck_oth').change(function () {
+
+        //    if ($(this).val() != true) {
+        //        var $select = $('#txt_oth');
+        //        $select.removeAttr('disabled');
+        //        $select.removeAttr('readonly');
+        //        $select.val('');
+        //        //trigger change func for dp
+        //        $select.change();
+        //    }
+
+        //    else {
+        //        var $select = $('#dp_typ');
+        //        $select.removeAttr('disabled');
+        //        $select.val(4);
+        //        $select.attr('readonly', 'readonly');
+        //        //trigger change func for dp
+        //        $select.change();
+        //    }
+        //});
+
+        ////start
+        //$('#cb_act').change(function () {
+        //    //alert($('#dp_typ').val());
+        //    if ($(this).val() == true) {
+        //        $('#tb_act').removeAttr('disabled');
+        //    }
+
+        //    else {
+
+        //        $('#tb_act').val("");
+        //        $('#tb_act').attr('disabled', 'disabled');
+        //    }
+
+        //});
+        ////end
+
+        ////start
+        //$('#cb_nfi1').change(function () {
+        //    if ($(this).val() == 9) {
+        //        $('#tb_nfi1').removeAttr('disabled');
+        //    }
+
+        //    else {
+
+        //        $('#tb_nfi1').val("");
+        //        $('#tb_nfi1').attr('disabled', 'disabled');
+        //    }
+
+        //});
+        ////end
+
+        ////start
+        //$('#cb_nfi2').change(function () {
+        //    if ($(this).val() == 9) {
+        //        $('#tb_nfi2').removeAttr('disabled');
+        //    }
+
+        //    else {
+
+        //        $('#tb_nfi2').val("");
+        //        $('#tb_nfi2').attr('disabled', 'disabled');
+        //    }
+
+        //});
+        ////end
+
+    });
+
+</script>

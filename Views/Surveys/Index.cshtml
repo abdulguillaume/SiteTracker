@@ -1,0 +1,136 @@
+﻿@model IEnumerable<Nigeria_Reg.Models.tblSurvey>
+
+@{
+    ViewBag.Title = "Surveys Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Surveys</h2>
+<hr />
+
+<p>
+    @Html.ActionLink("Create New Survey", "Create")
+</p>
+@if(Model.Count()>0){
+        
+<table class="table table-striped table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.tblSite.SSID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblSite.SiteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblSite.Type)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                @ViewBag.SSID
+            </td>
+            <td>
+                @ViewBag.SiteName
+            </td>
+            <td>
+               @ViewBag.SiteType
+            </td>
+        </tr>
+    </tbody>
+</table>
+    
+    int i = 0;
+
+<table width="50" class="table table-striped table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        No
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.SurveyDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WeekNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EnumeratorName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EnumeratorPhone)
+                    </th>
+                    <th>
+                        Survey Details
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+        {
+                    i=i+1;
+                    <tr>
+
+                        <td>
+                            @i
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SurveyDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WeekNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EnumeratorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EnumeratorPhone)
+                        </td>
+
+                        <td>
+                            @{
+                                @Html.ActionLink("Click here", "Details", new { id = item.SurveyID })
+                                if (@item.tblSectionB != null && @item.tblSectionC != null &&
+                                @item.tblSectionD != null && @item.tblSectionE != null &&
+                                @item.tblSectionF != null && @item.tblSectionG != null
+                                )
+                                { 
+                                    @: <b>(Done <img src="../../Content/Images/check_mark.jpg" />)</b>
+                                    }
+                                else
+                                {
+                                    @:  <p style="color: red">(Not complete)</p> 
+                                    }
+
+                            }
+
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.SurveyID }) |
+                            @*@Html.ActionLink("Show Details", "Details", new { id = item.SurveyID }) |*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.SurveyID })
+                        </td>
+                    </tr>
+        }
+            </tbody>
+        </table>
+
+        }
+        else
+        {
+        <b>No data.</b>
+        <br />
+        }
+
+        <br />
+        <p>
+            @Html.ActionLink("Back to Sites", "Index", "Sites")
+        </p>

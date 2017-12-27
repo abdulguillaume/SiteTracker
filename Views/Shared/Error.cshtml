@@ -1,0 +1,12 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">We are sorry! An error occurred while processing your request.</h2>
+<div>
+    <a href="javascript:history.go(-1)">Previous page</a> |
+    @Html.ActionLink("Back to Main page", "Index", "Home")
+</div>

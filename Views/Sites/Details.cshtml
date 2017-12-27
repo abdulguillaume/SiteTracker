@@ -1,0 +1,121 @@
+﻿@model Nigeria_Reg.Models.tblSite
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details about Site</h2>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SSID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SSID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SiteName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiteName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lon)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.tlkp_State.state_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tlkp_State.state_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tlkp_Lga.lga_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tlkp_Lga.lga_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tlkp_Ward.ward_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tlkp_Ward.ward_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tlkp_SiteType.value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Other_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Other_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.created_by)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.created_by)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updated_by)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updated_by)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.update_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.update_time)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SeqID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,554 @@
+﻿@model Nigeria_Reg.Models.tblSectionD
+
+@{
+    ViewBag.Title = "Survey SectionD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details Survey/Section D</h2>
+
+<div>
+
+    <hr />
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.SSID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.SiteName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.SurveyDate)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    @ViewBag.SSID
+                    @*@Html.DisplayFor(m => m.tblSurvey.tblSite.SSID)*@
+                </td>
+                <td>
+                    @ViewBag.SiteName
+                </td>
+                <td>
+                    @ViewBag.SiteType
+                </td>
+                <td>
+                    @ViewBag.s_date
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (Model != null)
+    {
+
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.tblSurvey.SurveyID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.tblSurvey.SurveyID }) |
+            @Html.ActionLink("<<SectionC", "Index", "SectionC", new RouteValueDictionary(new { id = Model.tblSurvey.SurveyID }), null) |
+            @Html.ActionLink(">>SectionE", "Index", "SectionE", new RouteValueDictionary(new { id = Model.tblSurvey.SurveyID }), null) |
+            @Html.ActionLink("Back to Surveys", "Index", "Surveys", new RouteValueDictionary(new { id = Model.tblSurvey.tblSite.SeqID }), null)
+        </p>
+
+        <fieldset>
+            <br />
+            <table class="table">
+                <tr><th colspan=4><div class="text-danger">D. WASH</div></th></tr>
+                <tr>
+                    <th colspan="4">
+                        <div class="text-danger">
+                            D.1a. Activities carried during the week
+                        </div>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        Distribution of water<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_Water_dist, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        Distribution of water storage facilities<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_WaterStorage_fac_dist, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        Installation/repair of latrines<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_Install_repair_lat, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Installation-repair of washing facilities<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_Install_repair_washing_fac, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        Installation/repair of garbage disposal<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_Install_repair_garbage_disp, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        Installation/repair of drainage system<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_Install_repair_drainage_syst, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hygiene promotion campaign<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_Hygiene_promo_campaign, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        Other activity carried out<div class="col-md-10">
+                            @Html.CheckBoxFor(m => m.b_other_activity, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        If other specify:<div class="display-field">
+                            @Html.DisplayFor(m => m.other_activity_spec)
+                        </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <th colspan="3">
+                        <div class="text-danger">
+                            D.1.a. Sanitation infrastructures
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+
+                        <table width="100%" class="table">
+                            <tr>
+                                <th colspan="1">***Total number of Latrines***</th>
+
+                                <th colspan="1">***Total number of Showers***</th>
+
+                                <th colspan="1">***Total number of Hand-washing points***</th>
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    <table ="100%" class="table">
+                                        <tr>
+                                            <td>Functional</td>
+                                            <td>Non-functional</td>
+                                            <th>Total</th>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <table ="100%" class="table">
+                                        <tr>
+                                            <td>Functional</td>
+                                            <td>Non-functional</td>
+                                            <th>Total</th>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <table ="100%" class="table">
+                                        <tr>
+                                            <td>Functional</td>
+                                            <td>Non-functional</td>
+                                            <th>Total</th>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    <table ="100%" class="table">
+                                        <tr>
+                                            <td>
+                                                <div class="col-md-10 txtresize">
+                                                    @Html.DisplayFor(m => m.nb_func_latrines)
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="col-md-10 txtresize">
+                                                    @Html.DisplayFor(m => m.nb_non_func_latrines)
+                                                </div>
+                                            </td>
+                                            <th>
+                                                <div class="text-danger">
+                                                    @Html.DisplayFor(m => m.tot_lat)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+
+                                <td>
+                                    <table ="100%" class="table">
+                                        <tr>
+                                            <td>
+                                                <div class="col-md-10 txtresize">
+                                                    @Html.DisplayFor(m => m.nb_func_bathrooms)
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="col-md-10 txtresize">
+                                                    @Html.DisplayFor(m => m.nb_non_func_bathrooms)
+                                                </div>
+                                            </td>
+                                            <th>
+                                                <div class="text-danger">
+                                                    @Html.DisplayFor(m => m.tot_bath)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+
+                                <td>
+                                    <table ="100%" class="table">
+                                        <tr>
+                                            <td>
+                                                <div class="col-md-10 txtresize">
+                                                    @Html.DisplayFor(m => m.nb_func_WP)
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="col-md-10 txtresize">
+                                                    @Html.DisplayFor(m => m.nb_non_func_WP)
+                                                </div>
+                                            </td>
+                                            <th>
+                                                <div class="text-danger">
+                                                    @Html.DisplayFor(m => m.tot_wp)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+                            </tr>
+
+                            <tr><th colspan="4"><div class="text-danger">D.1b. Cholera</div></th></tr>
+
+                            <tr>
+                                <td>When was the last confirmed case of cholera in the camp?</td>
+                                <th>
+                                    <div class="display-field">
+                                        @Html.DisplayFor(m => m.LastCholera_case)
+                                    </div>
+                                </th>
+                                <td>How many months ago if available:</td>
+                                <th>
+                                    <div class="display-field">
+                                        @Html.DisplayFor(m => m.NbMonths) month(s)
+                                    </div>
+                                </th>
+                            </tr>
+
+                            <tr><th colspan="4"><div class="text-danger">D.1c. Waste Disposal (observation)</div></th></tr>
+
+                            <tr>
+                                <td>On a scale from 1 (very clean) to 5 (v. dirty), how clean regarding solid waste do you think is the camp? </td>
+                                <th>
+                                    <div class="display-field">
+                                        @Html.DisplayFor(m => m.SolidWaste_st)
+                                    </div>
+                                </th>
+                            </tr>
+
+                            <tr><th colspan="4"><div class="text-danger">D.1d. Drainage (observation)</div></th></tr>
+
+                            <tr>
+                                <td>On a scale from 1 (very good) to 5 (v. poor), how would you rate the drainage of the camp?</td>
+                                <th>
+                                    <div class="display-field">
+                                        @Html.DisplayFor(m => m.Drainage_st)
+                                    </div>
+                                </th>
+                            </tr>
+
+                            <tr><th colspan="4"><div class="text-danger">D.1e. Water</div></th></tr>
+
+                            <tr>
+                                <td>What is the average waiting time at the water points?</td>
+                                <th>
+                                    <div class="display-field">
+                                        @Html.DisplayFor(m => m.AvgWaitingTimeWP)
+                                    </div>
+                                </th>
+                                <td>Precise how many minutes if you can:</td>
+                                <th>
+                                    <div class="display-field">
+                                        @Html.DisplayFor(m => m.NbMinutes) minute(s)
+                                    </div>
+                                </th>
+                            </tr>
+
+                            <tr><td colspan="6">Volume of water produced per day (liters)</td></tr>
+
+                            <tr>
+                                <td colspan="2"></td>
+                                <td>Nb. unit</td>
+                                <td>Volume (liter) or flow (liter/h)</td>
+                                <td colspan="2">Number of time the tank is filled up per day (or nb of working hours)</td>
+                            </tr>
+
+                            <tr>
+                                <th style="color: green">Water from hand-pump (wells or boreholes)
+                                <th />
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.HandPump_NbUnit)
+                                    </div>
+                                </td>
+                                <td>700 l/h</td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.HandPump_NbWorkingHrs)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="color: orange">Water from truck tanks of 2.000 liters
+                                <th />
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank2KL_NbUnit)
+                                    </div>
+                                </td>
+                                <td>2.000 l</td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank2KL_NbTimesFilled)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="color: blueviolet">Water from truck tanks of 3.000 liters
+                                <th />
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank3KL_NbUnit)
+                                    </div>
+                                </td>
+                                <td>3.000 l</td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank3KL_NbTimesFilled)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="color: darkblue">Water from truck tanks of 5.000 liters
+                                <th />
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank5KL_NbUnit)
+                                    </div>
+                                </td>
+                                <td>5.000 l</td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank5KL_NbTimesFilled)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="color: purple">Water from truck tanks/bladder of 10.000 liters
+                                <th />
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank10KL_NbUnit)
+                                    </div>
+                                </td>
+                                <td>10.000 l</td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.WaterTank10KL_NbTimesFilled)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="color: darkgoldenrod">
+                                    Number of taps from a Water Piped System from the city /
+                                    town (only if the camps is connected to water network from outside the camp)
+                                <th />
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.Tap_NbUnit)
+                                    </div>
+                                </td>
+                                <td>400 l/h</td>
+                                <td>
+                                    <div class="col-md-10 txtresize">
+                                        @Html.DisplayFor(m => m.Tap_NbWorkingHrs)
+                                    </div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <th colspan="3">
+                        <div class="text-danger">
+                            D.2. Comments
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(m => m.Comments, 6, 200, new { @disabled = "disabled" })
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th colspan="3">
+                        <div class="text-danger">
+                            C.3. Services and Facilities donated with status (weekly basis)
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="8">
+
+                        <table width="100%" class="table">
+                            <tr>
+                                <th>S/N</th>
+                                <th>Sub-Category</th>
+                                <th>Description</th>
+                                <th>QTTY</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Provided by?</th>
+                                <th>Remark</th>
+                            </tr>
+
+                            @{int j = 0;}
+                            @foreach (var m in Model.tbl_WASH_Services.OrderBy(x => x.SN))
+                            {
+                                j++;
+                                <tr>
+
+                                    <td>
+                                        @*@Html.DisplayFor(model => m.SN)*@
+                                        @j
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(model => m.tlkp_WASH_SubCat.value)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(model => m.tlkp_WASH_Desc.value)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10 txtresize">
+                                            @Html.DisplayFor(model => m.QTTY)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(model => m.Lat)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(model => m.Lon)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(model => m.tlkp_Provider.value)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(model => m.Remark)
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+
+            <br />
+
+            <table width=100%>
+                <tr>
+                    <th>Created by</th>
+                    <th>Created time</th>
+                    <th>Updated by</th>
+                    <th>Updated time</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="display-field">
+                            @Html.DisplayFor(model => model.created_by)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="display-field">
+                            @Html.DisplayFor(model => model.create_time)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="display-field">
+                            @Html.DisplayFor(model => model.updated_by)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="display-field">
+                            @Html.DisplayFor(model => model.update_time)
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </fieldset>
+
+        <br />
+        <p>
+            @Html.ActionLink(">>SectionE", "Index", "SectionE", new RouteValueDictionary(new { id = Model.tblSurvey.SurveyID }), null) |
+            @Html.ActionLink("Back to Surveys", "Index", "Surveys", new RouteValueDictionary(new { id = Model.tblSurvey.tblSite.SeqID }), null)
+        </p>
+
+    }
+    else
+    {
+
+        <p>
+            @Html.ActionLink("Create SectionD", "Create", new { id = (int)ViewBag.s_id }) |
+            @Html.ActionLink("Back to SectionC", "Index", "SectionC", new RouteValueDictionary(new { id = (int)ViewBag.s_id }), null)
+        </p>
+
+        <b>No data</b>
+    }
+</div>

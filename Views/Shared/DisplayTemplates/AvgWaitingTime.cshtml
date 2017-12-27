@@ -1,0 +1,26 @@
+﻿@model System.Nullable <int>
+
+@if (Model==1)
+{
+    <text>Less than 15min</text>
+}
+else if (Model==2)
+{
+    <text>16 to 30min</text>
+}
+else if (Model==3)
+{
+    <text>30 to 60min</text>
+}
+else if (Model==4)
+{
+    <text>>60min and less than 120min</text>
+}
+else if (Model==5)
+{
+    <text>>120min (or 2h)</text>
+}
+else
+{
+    <text>N/A</text>
+}

@@ -1,0 +1,279 @@
+﻿@model Nigeria_Reg.Models.tblSectionC
+
+@{
+    ViewBag.Title = "Delete SectionC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Do you want to delete Survey/Section C ?</h2>
+
+<div>
+    <hr />
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.SSID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.SiteName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.tblSite.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tblSurvey.SurveyDate)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => m.tblSurvey.tblSite.SSID)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.tblSurvey.tblSite.SiteName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.tblSurvey.tblSite.tlkp_SiteType.value)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.tblSurvey.SurveyDate)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <tr><th colspan=4><div class="text-danger">C. CCCM/ES NFI</div></th></tr>
+        <tr>
+            <th colspan="3">
+                <div class="text-danger">
+                    C.1. Activities carried out during the week
+                </div>
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                Distribution of shelter kits<div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.b_shelter_kits_dist, new { @disabled = "disabled" })
+                </div>
+            </td>
+            <td>
+                Distribution of tents<div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.b_tent_dist, new { @disabled = "disabled" })
+                </div>
+            </td>
+            <td>
+                Distribution of NFI<div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.b_nfi_dist, new { @disabled = "disabled" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Distribution on Hygiene kits<div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.b_hyg_kits_dist, new { @disabled = "disabled" })
+                </div>
+            </td>
+            <td>
+                Shelter repairs/construction materials<div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.b_shelter_repairs, new { @disabled = "disabled" })
+                </div>
+            </td>
+            <td>
+                <div class="col-md-10">
+                    Other @Html.CheckBoxFor(m => m.b_other_activity, new { @disabled = "disabled" })
+                    @*</div>
+
+
+                        <div class="display-field">*@
+                    / specify: @Html.DisplayFor(m => m.other_activity_spec)
+                </div>
+
+            </td>
+
+        </tr>
+
+        <tr><th colspan="2"><div class="text-danger">C.1. Gaps identified on site</div></th></tr>
+
+        <tr>
+            <td>Most needed NFI</td>
+            <th>
+                <div class="display-field">
+                    @Html.DisplayFor(m => m.most_needed_nfi)
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    if other specify: @Html.DisplayFor(m => m.Other_needed_nfi1)
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>2nd Most needed NFI</td>
+            <th>
+                <div class="display-field">
+                    @Html.DisplayFor(m => m.sec_most_needed_nfi)
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    if other specify: @Html.DisplayFor(m => m.Other_needed_nfi2)
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>% of HH living outside (no shelter)</td>
+            <th>
+                <div class="display-field">
+                    @Html.DisplayFor(m => m.perc_hh_living_out)
+                </div>
+            </th>
+        </tr>
+
+        <tr>
+            <th colspan="3">
+                <div class="text-danger">
+                    C.2. Comments (State urgent gaps first)
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div class="editor-field">
+                    @*@Html.DisplayFor(m => m.comments)*@
+                    @Html.TextAreaFor(m => m.comments, 6, 200, new { @disabled = "disabled" })
+                </div>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th colspan="3">
+                <div class="text-danger">
+                    C.3. Services and Facilities donated with status (weekly basis)
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td colspan="8">
+
+                <table width="100%" class="table">
+                    <tr>
+                        <th>S/N</th>
+                        <th>Sub-Category</th>
+                        <th>Description</th>
+                        <th>QTTY</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Provided by?</th>
+                        <th>Remark</th>
+                    </tr>
+
+                    @{int j = 0;}
+                    @foreach (var m in Model.tbl_ESNFI_Services.OrderBy(x => x.SN))
+                    {
+                        j++;
+                        <tr>
+
+                            <td>
+                                @*@Html.DisplayFor(model => m.SN)*@
+                                @j
+                            </td>
+                            <td>
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => m.tlkp_ESNFI_SubCat.value)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => m.tlkp_ESNFI_Desc.value)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-10 txtresize">
+                                    @Html.DisplayFor(model => m.QTTY)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => m.Lat)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => m.Lon)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => m.tlkp_Provider.value)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => m.Remark)
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    <br />
+
+    <table width=100%>
+        <tr>
+            <th>Created by</th>
+            <th>Created time</th>
+            <th>Updated by</th>
+            <th>Updated time</th>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.created_by)
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.create_time)
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.updated_by)
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.update_time)
+                </div>
+            </td>
+
+        </tr>
+    </table>
+
+
+    <br />
+
+    @using (Html.BeginForm())
+    {
+        //@Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Cancel", "Index", new { id = Model.SurveyID })
+        </div>
+    }
+</div>
+

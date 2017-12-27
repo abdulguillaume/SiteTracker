@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "NotFound";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Page Not Found</h2>
+<div>
+    <a href="javascript:history.go(-1)">Previous page</a> |
+    @Html.ActionLink("Back to Main page", "Index", "Home")
+</div>
+

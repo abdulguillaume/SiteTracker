@@ -1,0 +1,111 @@
+﻿@model Nigeria_Reg.Models.tblSurvey
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Exception != null)
+{
+    <p style="color: Red">@ViewBag.Exception</p>
+}
+
+@*<link href="~/Content/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery-ui.js" type="text/javascript"></script>*@
+
+<script>
+    $(function () {
+        //$("#SurveyDate").datepicker();
+        //$.datepicker.setDefaults({ dateFormat: 'dd/mm/yy' });
+
+        $('#SurveyDate').datepicker({
+            constrainInput: true,   // prevent letters in the input field
+            //minDate: new Date(),    // prevent selection of date older than today
+            maxDate: new Date(),    // prevent selection of date greater than today
+            //showOn: 'button',       // Show a button next to the text-field
+            autoSize: true,         // automatically resize the input field
+            dateFormat: 'dd/mm/yy',  // Date Format used
+            //beforeShowDay: $.datepicker.noWeekends,     // Disable selection of weekends
+            firstDay: 1 // Start with Monday
+        })
+
+
+    });
+</script>
+
+
+<h2>Create New Survey</h2>
+<hr />
+
+@using (Html.BeginForm()) 
+{
+    //@Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="form-group">
+            
+        <div class="col-md-10">
+                @Html.HiddenFor(m => m.SurveyID)
+                @Html.HiddenFor(m => m.SeqID)
+
+                @Html.ValidationMessageFor(model => model.SurveyID)
+                @Html.ValidationMessageFor(model => model.SeqID)
+
+                SSID / Site Name<div class="text-danger"><b>@ViewBag.SSID / @ViewBag.SiteName</b></div>
+            @*SeqID<div class="display-field">@ViewBag.seqid</div>
+    Site/Host community name<div class="display-field">@ViewBag.SiteName</div>*@
+        </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SurveyDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SurveyDate, new { @class = "edit-date" })
+                @Html.ValidationMessageFor(model => model.SurveyDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WeekNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10 txtresize">
+                @Html.TextBoxFor(model => model.WeekNo, new { disabled = "disabled" })
+                @*@Html.HiddenFor(model => model.WeekID)*@
+                @Html.ValidationMessageFor(model => model.WeekNo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EnumeratorName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EnumeratorName)
+                @Html.ValidationMessageFor(model => model.EnumeratorName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EnumeratorPhone, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EnumeratorPhone)
+                @Html.ValidationMessageFor(model => model.EnumeratorPhone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Surveys", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,89 @@
+﻿@model Nigeria_Reg.Models.tblSurvey
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Do you want to delete this survey?</h2>
+<hr />
+
+<div class="form-horizontal">
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            SSID / Site Name<div class="text-danger"><b>@ViewBag.SSID / @ViewBag.SiteName</b></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SurveyDate, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.SurveyDate)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.WeekNo, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.WeekNo)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EnumeratorName, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.EnumeratorName)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EnumeratorPhone, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.EnumeratorPhone)
+        </div>
+    </div>
+
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.created_by, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.created_by)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.create_time, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.create_time)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.updated_by, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.updated_by)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.update_time, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.update_time)
+        </div>
+    </div>
+
+    @*<h3>Are you sure you want to delete this survey?</h3>*@
+
+
+        @using (Html.BeginForm())
+        {
+            //@Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
