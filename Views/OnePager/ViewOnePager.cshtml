@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "ViewOnePager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#date1").datepicker({
+            constrainInput: true,   // prevent letters in the input field
+            //minDate: new Date(),    // prevent selection of date older than today
+            maxDate: new Date(),    // prevent selection of date greater than today
+            //showOn: 'button',       // Show a button next to the text-field
+            autoSize: true,         // automatically resize the input field
+            dateFormat: 'dd/mm/yy',  // Date Format used
+            //beforeShowDay: $.datepicker.noWeekends,     // Disable selection of weekends
+            firstDay: 1 // Start with Monday
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#date1").change(function () {
+
+            if ($(this).val() != "NULL") {
+
+
+                $.ajax({
+                    url: "/OnePager/getSSIDs",
+                    type: 'POST',
+                    data: { date1: $(this).val() },
+                    success: function (ssids) {
+
+                        var $select = $('#ssid');
+                        //$('#ssid').empty();
+                        //$('#ssid').append("<option value=''>[Select]</option>");
+                        $select.empty();
+                        $select.append("<option value=''>[Select]</option>");
+                        $.each(ssids, function (i, ssid) {
+                            $select.append("<option value='" + ssid.Value + "'>" + ssid.Text + "</option>");
+                        });
+                    },
+                    error: function (xhr) { alert("error!!"); }
+                });
+
+            };
+
+
+        });
+
+        $('#forma').submit(function (e) {
+
+            if ($('#date1').val() == "") {
+                $('#errorMsgSSID').hide();
+                $('#errorNoData').hide();
+                $('#errorMsgDt').show();
+                e.preventDefault();
+            }
+            else if ($('#ssid').val() == "") {
+                $('#errorMsgSSID').show();
+                $('#errorNoData').hide();
+                $('#errorMsgDt').hide();
+                e.preventDefault();
+            }
+            else {
+                $('#errorMsgSSID').hide();
+                $('#errorMsgDt').hide();
+                $('#errorNoData').hide();
+
+                blockUIForDownload();
+            }
+        });
+
+
+
+
+
+    });
+
+    function CompareDate() {
+        //Note: 00 is month i.e. January
+        //       var dateOne = new Date(2010, 00, 15); //Year, Month, Date
+        //       var dateTwo = new Date(2011, 00, 15); //Year, Month, Date
+        var format = 'mm/dd/yy';
+        var dateOne = Date.parse($('#date1').val());
+        var dateTwo = Date.parse($('#date2').val());
+        if (dateTwo >= dateOne) { return true; }
+        else { return false; }
+
+    }
+
+    var fileDownloadCheckTimer;
+
+    function blockUIForDownload() {
+        var token = new Date().getTime(); //use the current timestamp as the token value
+        $('#tokenId').val(token);
+        //$('#errorMsgSt').hide();
+        //$("#pleaseWait").show();
+        //$(".download").attr("disabled", "disabled");
+        //$.blockUI();
+        fileDownloadCheckTimer = window.setInterval(function () {
+            var cookieValue = $.cookie('fileDownloadToken');
+            if (cookieValue == token)
+                finishDownload();
+        }, 1000);
+    }
+
+    function finishDownload() {
+        window.clearInterval(fileDownloadCheckTimer);
+        $.removeCookie('fileDownloadToken'); //clears this cookie value
+        //$("#pleaseWait").hide();
+        //$(".download").removeAttr("disabled");
+        //$.unblockUI();
+    }
+</script>
+
+
+
+
+        <h2>ViewOnePager</h2>
+
+        <fieldset>
+            <legend>Download One Pager</legend>
+
+        @using (Html.BeginForm("ExportWord", "OnePager", FormMethod.Post, new { id = "forma" }))
+    {
+
+            <div>
+                        Select a date (within the week of report)
+                        <div>@Html.TextBox("date1") </div>
+                    </div><br />
+            <div>
+                        Select SSID
+                        <div>
+                            <select id="ssid" name="ssid">
+                                <option value="">[Select]</option>
+                            </select>
+                        </div>
+                        @*<div>@Html.DropDownList("ssid", (List<SelectListItem>)ViewBag.StatesList)</div>*@
+                    </div><br />
+            <div>
+                        <input type="image" src="../../Content/Images/word_logo.png" class="download" width="100" height="50" />
+                    </div>
+
+
+        @Html.Hidden("tokenId");
+        @Html.Hidden("errorId");
+    }
+
+            <div id="errorMsgDt" style="display: none; color: Red">
+                Need to select a date first!
+            </div>
+
+            <div id="errorMsgSSID" style="display: none; color: Red">
+                Need to select an SSID first!
+            </div>
+
+            <div id="errorNoData" style="display: none; color: Red">
+                No data for current filter! Please try again...
+            </div>
+
+            <div id="pleaseWait" style="display: none">
+                <img src="../../Content/Images/PleaseWait.gif" />
+                Please Wait...
+            </div>
+
+        </fieldset>
+        <hr />

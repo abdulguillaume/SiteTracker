@@ -45,6 +45,11 @@
                     </li>
 
                     <li class="divider-vertical"></li>
+                    <li class="@(ViewBag.Active == "one" ? "active" : "")">
+                        @Html.ActionLink("One Pager", "GetOnePager", "OnePager")
+                    </li>
+
+                    <li class="divider-vertical"></li>
                     <li class="@(ViewBag.Active == "man" ? "active" : "")">
                         @Html.ActionLink("User Management", "AdminOnly", "ManageUser")
                     </li>
